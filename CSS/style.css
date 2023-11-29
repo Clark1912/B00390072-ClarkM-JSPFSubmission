@@ -1,0 +1,26 @@
+#headerSection
+{
+    background-color: rgb(178, 251, 227);
+    text-align: center;
+    padding: 3%;
+}
+
+#aboutCard
+{
+    width: fit-content;
+    text-align: center;
+    margin-right: 25px;
+    float: right; 
+}
+
+#homeMainText
+{
+    width: fit-content; 
+    display: inline-block;
+}
+
+#carouselDiv
+{
+    width: 70%; 
+    display: inline-block;
+}
