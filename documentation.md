@@ -167,7 +167,7 @@ that.scene.enablePhysics(new Vector3(0, -9.8, 0), havokPlugin);
 ```
 
 ## Collision Detection
-The collision detection between the player and the crate allows for the score to be incremented. The collision is process on the player rather than on the box. The code can be seen below:
+The collision detection between the player and the crate allows for the score to be incremented. The collision is a process on the player rather than on the box. The code can be seen below:
 
 ``` Code
 // Collision
@@ -248,11 +248,11 @@ scene.onBeforeRenderObservable.add(()=> {
 ```
 
 ### Fences
-The fences were found in the Babylon.js Meshes Library. The fences were added to allow the player to see where the crates can spawn. Due to the file for the fence being a .gltf file, an additional import had to be added to the code so that the model could be imported. The code for this import can be seen below:
+The fences were found in the Babylon.js Meshes Library. The fences were added to allow the player to see where the crate can spawn. Due to the file for the fence being a .gltf file, an additional import had to be added to the code so that the model could be imported. The code for this import can be seen below:
 ```Code
 import "@babylonjs/loaders/glTF";
 ```
-As the fence is shorter than the ground it is supposed to surround, multiple instances of it had to be created. The creation of the instances takes place in a function that is executed when the fence mesh is imported.
+As the fence is shorter than the width of the ground it is supposed to surround, multiple instances of it had to be created. The creation of the instances takes place in a function that is executed when the fence mesh is imported.
 ```Code
 let fence: any = SceneLoader.ImportMesh("", "./models/", "fenceASection1.gltf", scene, function(meshes){
     let mesh = meshes[1] as Mesh;
@@ -323,7 +323,7 @@ fence = fences;
 
 return fence;
 ```
-The variable fence was assigned the array fences as it allows for the array to be returned and executed.
+The variable fence was assigned the array of fence instances as it allows for the array to be returned and the instances to be created.
 
 ## Textures
 Textures have been applied to multiple game objects in the scenes. The skybox is made up of textures on all faces of the cube to provide the illusion of a sky. The box has a texture on it to make it appear like a crate. The ground has a texture on it to make it look like a stone floor. An example of a texture being applied can be seen below:
@@ -395,15 +395,15 @@ The menu button is found in the top right corner of the game scene. This button 
 
 ## Problems
 ### Physics
-An issue that occurred that caused significant delays to the creation of this element was attempting to move the box back onto the ground when it had fell off. The issue was caused because the box had physics applied to it and when physics is applied to an object, the object's position cannot be easily changed by manipulating its position attribute. Attempts to solve this issue included, turning off the physics engine and restarting it when the position of the box has been changed, and pausing the physics and then moving the box. The problem with these solutions was that while it was easy to stop or pause the physics engine, attempts to start it again failed. The solution that was found for this issue was to completely destroy the box and then recreating it at the desired height.
+An issue that occurred that caused significant delays to the creation of this element was attempting to move the box back onto the ground when it had fallen off. The issue was caused because the box had physics applied to it and when physics is applied to an object, the object's position cannot be easily changed by manipulating its position attribute. Attempts to solve this issue included, turning off the physics engine and restarting it when the position of the box has been changed, and pausing the physics and then moving the box. The problem with these solutions was that while it was easy to stop or pause the physics engine, attempts to start it again failed. The solution that was found for this issue was to completely destroy the box and then recreating it at the desired position.
 
 ### Importing meshes
-Another issue that took up a lot of time was importing meshes. When importing the fence mesh, errors appeared. One of these errors related to the file being a .gltf file. This meant that an addition module needed to be imported so that .gltf files could be rendered. Another error that occurred in relation to importing meshes was that meshes import as an AbstractMesh. This caused issues with creating an instance of the mesh as the function for creating an instance was only for objects of type Mesh. To overcome this issue, when assigning a mesh from the meshes imported, it had to include "as Mesh" in the assignment.
+Another issue that took up a lot of time was importing meshes. When importing the fence mesh, errors appeared. One of these errors related to the file being a .gltf file. This meant that an additional module was needed to be imported so that .gltf files could be rendered. Another error that occurred in relation to importing meshes was that meshes import as an AbstractMesh. This caused issues with creating an instance of the mesh as the function for creating an instance was only for objects of type Mesh. To overcome this issue, when assigning a mesh from the meshes imported, "as Mesh" had to be included in the assignment.
 ```Assigning Mesh
 let fence: any = SceneLoader.ImportMesh("", "./models/", "fenceASection1.gltf", scene, function(meshes){
       let mesh = meshes[1] as Mesh;
 ```
-The mesh for the fence also had to be set as the second item in the array as the first item caused only one fence to spawn.
+The mesh for the fence also had to be set to the second item in the array as the first item caused only one fence to spawn.
 
 ## Assets Used
 Multiple assets were sourced for this element. Where they were found and who they were by can be seen below as well as links to the assets.
